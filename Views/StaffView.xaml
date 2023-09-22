@@ -1,0 +1,218 @@
+﻿<UserControl x:Class="WPFApp.Views.StaffView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:WPFApp.ViewModels"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:StaffViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="0">
+                <fa:IconImage Icon="Search" Height="20" Width="20" Foreground="White"/>
+                <TextBox Text="{Binding SearchParameters.Name}"
+                         FontSize="12"
+                         Height="33"
+                         Width="177"
+                         Background="Transparent"
+                         FontWeight="Medium"
+                         FontFamily="Montserrat"
+                         Foreground="White"
+                         CaretBrush="{StaticResource plainTextColor3}"
+                         BorderBrush="White"
+                         BorderThickness="0,0,0,1"
+                         VerticalContentAlignment="Center"
+                         Margin="5,0,0,0">
+                </TextBox>
+                <ComboBox Text="{Binding SearchParameters.Designation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Margin="10,0,0,0"
+                          Width="200"
+                          Height="34"
+                          FontSize="12"
+                          FontFamily="Montserrat"
+                          Focusable="False"
+                          IsEditable="True"
+                          IsReadOnly="True">
+                    <ComboBoxItem>All Staff</ComboBoxItem>
+                    <ComboBoxItem>Admin</ComboBoxItem>
+                    <ComboBoxItem>Doctor</ComboBoxItem>
+                    <ComboBoxItem>Assistant</ComboBoxItem>
+                    <ComboBoxItem>Worker</ComboBoxItem>
+                </ComboBox>
+
+                <ComboBox Text="{Binding SearchParameters.Shift, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Margin="10,0,0,0"
+                          Width="200"
+                          Height="34"
+                          FontSize="12"
+                          FontFamily="Montserrat"
+                          Focusable="False"
+                          IsEditable="True"
+                          IsReadOnly="True">
+                    <ComboBoxItem>All Shifts</ComboBoxItem>
+                    <ComboBoxItem>Morning</ComboBoxItem>
+                    <ComboBoxItem>Evening</ComboBoxItem>
+                </ComboBox>
+
+
+
+            </StackPanel>
+            <Button Grid.Column="1"
+                    Content="Search"
+                    FontSize="12"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    BorderThickness="0"
+                    Foreground="White"
+                    VerticalAlignment="Center"
+                    Command="{Binding SearchCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#a51214"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                            CornerRadius="15"
+                                            Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#ce070f"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+            <TextBlock Text="(Salary Range)       From:"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       FontFamily="Montserrat"
+                       FontSize="12"
+                       Margin="10 0 10 0"/>
+            <TextBox Text="{Binding SearchParameters.MinSalary}"
+                     Width="177" Height="33"
+                     FontSize="10"
+                     FontWeight="Medium"
+                     FontFamily="Montserrat"
+                     Foreground="White"
+                     CaretBrush="{StaticResource plainTextColor3}"
+                     BorderBrush="White"
+                     BorderThickness="0,0,0,1"
+                     VerticalContentAlignment="Center"/>
+            <TextBlock Text="To:"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       FontFamily="Montserrat"
+                       FontSize="12"
+                       Margin="10 0 10 0"/>
+            <TextBox Text="{Binding SearchParameters.MaxSalary}"
+                     Width="177" Height="33"
+                     FontSize="10"
+                     FontWeight="Medium"
+                     FontFamily="Montserrat"
+                     Foreground="White"
+                     CaretBrush="{StaticResource plainTextColor3}"
+                     BorderBrush="White"
+                     BorderThickness="0,0,0,1"
+                     VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <Border Grid.Row="3"
+                Background="#990000"
+                CornerRadius="10" 
+                Padding="10">
+            <ui:DataGrid Name="StaffGrid"
+                 ColumnWidth="*"
+                 Background="#990000"
+                 BorderThickness="0"
+                 IsReadOnly="True"
+                 FontFamily="Calibri"
+                 ScrollViewer.CanContentScroll="False"
+                 HorizontalAlignment="Stretch"
+                 Margin="10"
+                 VerticalAlignment="Stretch"
+                 AutoGenerateColumns="False"
+                 ItemsSource="{Binding Users}">
+                    <ui:DataGrid.Resources>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Padding" Value="8"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="FontFamily" Value="Montserrat" />
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="Background" Value="#990000" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="Padding" Value="0 10"/>
+                        </Style>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="FontSize" Value="10" />
+                            <Setter Property="Margin" Value="0,5" />
+                            <Setter Property="Foreground" Value="Black" />
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#E2E2E2" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ui:DataGrid.Resources>
+                    <ui:DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*" />
+                        <DataGridTemplateColumn Header="Photo" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Width="40" Height="40">
+                                        <Ellipse Width="30" Height="30" Stroke="White" StrokeThickness="1">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding Photo}" Stretch="UniformToFill" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding StaffName}" Width="*"/>
+                        <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="*" />
+                        <DataGridTextColumn Header="Designation" Binding="{Binding Designation}" Width="*" />
+                        <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" Width="*" />
+                        <DataGridTextColumn Header="DOB" Binding="{Binding DOB, StringFormat='{}{0:MM/dd/yyyy}'}" Width="*" />
+                        <DataGridTextColumn Header="Contact" Binding="{Binding Contact}" Width="*" />
+                        <DataGridTextColumn Header="Shift" Binding="{Binding StaffShift}" Width="*" />
+                        <DataGridTextColumn Header="Username" Binding="{Binding UserName}" Width="*" />
+                        <DataGridTextColumn Header="Password" Binding="{Binding Password}" Width="*" />
+                    </ui:DataGrid.Columns>
+                </ui:DataGrid>
+        </Border>
+    </Grid>
+
+
+</UserControl>

@@ -1,0 +1,31 @@
+﻿<Application x:Class="WPFApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFApp"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Startup="ApplicationStart">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPFApp;component/Styles/UIColors.xaml"/>
+                <ResourceDictionary Source="/WPFApp;component/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/WPFApp;component/Styles/BoxStyles.xaml"/>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="SystemAccentColor">#ce070f</Color>
+            <SolidColorBrush x:Key="SystemColorControlAccentBrush0"
+					 Color="{StaticResource SystemAccentColor}" />
+            <Color x:Key="SystemAccentColorPrimary">#ce070f</Color>
+            <SolidColorBrush x:Key="SystemColorControlAccentBrush1"
+					 Color="{StaticResource SystemAccentColorPrimary}" />
+            <Color x:Key="SystemAccentColorSecondary">#ce070f</Color>
+            <SolidColorBrush x:Key="SystemColorControlAccentBrush2"
+					 Color="{StaticResource SystemAccentColorSecondary}" />
+            <Color x:Key="SystemAccentColorTertiary">#ce070f</Color>
+            <SolidColorBrush x:Key="SystemColorControlAccentBrush3"
+					 Color="{StaticResource SystemAccentColorTertiary}" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+     

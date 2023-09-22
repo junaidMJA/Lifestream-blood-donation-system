@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="WPFApp.Views.StockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFApp.Views" 
+             xmlns:viewModel="clr-namespace:WPFApp.ViewModels"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:StockViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        Grid.Column="0">
+                <ComboBox
+                    x:Name="HealthTypeCombo"
+                    Margin="10,0,0,0"
+                    Width="143"
+                    Height="34"
+                    Text="--Bag Health--"
+                    FontSize="12"
+                    FontFamily="Montserrat"
+                    Focusable="False"
+                    IsEditable="True"
+                    IsReadOnly="True">
+                    <ComboBoxItem Name="s1">All Bags</ComboBoxItem>
+                    <ComboBoxItem Name="s2">Fresh</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <Button Grid.Column="1"                           
+                    Content="Search"                            
+                    FontSize="12"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    BorderThickness="0"
+                    Foreground="White"
+                    VerticalAlignment="Center"
+                    Click="SearchButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#a51214"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                                    CornerRadius="15"
+                                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#ce070f"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+        <Border Grid.Row="1"
+                Background="#990000"
+                CornerRadius="10" 
+                Padding="10">
+            <ui:DataGrid Name="StockGrid"
+                         ColumnWidth="Auto"
+                         Background="#990000"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         FontFamily="Calibri"
+                         ScrollViewer.CanContentScroll="False"
+                         HorizontalAlignment="Stretch"
+                         Margin="10"
+                         VerticalAlignment="Stretch"
+                         AutoGenerateColumns="False"
+                         ItemsSource="{Binding StockItems}">
+                <ui:DataGrid.Resources>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="8"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontFamily" Value="Montserrat" />
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Background" Value="#990000" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="Padding" Value="0 10"/>
+                    </Style>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="FontSize" Value="10" />
+                        <Setter Property="Margin" Value="0,5" />
+                        <Setter Property="Foreground" Value="Black" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#E2E2E2" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ui:DataGrid.Resources>
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="*" />
+                    <DataGridTextColumn Header="Bag Type" Binding="{Binding BagType}" Width="*" />
+                </ui:DataGrid.Columns>
+            </ui:DataGrid>
+        </Border>
+    </Grid>
+</UserControl>
